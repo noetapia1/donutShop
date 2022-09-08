@@ -1,0 +1,6 @@
+<p>{{title}}  {{today | date}}</p>
+<ul >
+<li *ngFor="let donut of donutResults">
+    <a [routerLink] = "['/donutDetail', donut.id]">{{donut.name}}</a>
+</li>
+</ul>
