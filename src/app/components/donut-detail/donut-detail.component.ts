@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Donut, Result } from 'src/app/interfaces/donut';
 import { DonutService } from 'src/app/services/donut.service';
 
@@ -11,13 +11,12 @@ import { DonutService } from 'src/app/services/donut.service';
 export class DonutDetailComponent implements OnInit {
 
   donut:Donut;
-  constructor(private service:DonutService, private route:ActivatedRoute) { }
+  constructor(private service:DonutService, private route:ActivatedRoute, private router:Router) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe( (params)=>{
       this.getDonutDetail(String(params.get("id")));
     });
-    
   }
 
   getDonutDetail(id:string){
@@ -25,6 +24,16 @@ export class DonutDetailComponent implements OnInit {
       this.donut = data;
     });
   }
+
+  navigateToCart(){
+    this.router.navigate(['cartDetail']);
+  }
+
+  addDonutToCart(){
+    this.service.addDonutToCart(this.donut);
+    this.navigateToCart();
+  }
+
 
 
 }
